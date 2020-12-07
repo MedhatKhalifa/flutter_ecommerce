@@ -103,11 +103,11 @@ class LoginPageState extends State<LoginPage> {
 
   void _registerUser() async {
     setState(() => _isSubmitting = true);
-    print('Go...................');
+
     http.Response response = await http.post(
         'https://atawfiq1.pythonanywhere.com/api/login/',
         body: {'username': _username, 'password': _password});
-    print('back<--------------------------');
+
     final responseData = json.decode(response.body);
     print('------------------------------------');
     print(responseData);
