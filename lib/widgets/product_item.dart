@@ -18,9 +18,11 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final String pictureUrl =
         'https://atawfiq1.pythonanywhere.com/${item.picture}';
+    // to be able to Tap
     return InkWell(
-        onTap: () =>
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        onTap: () => Navigator.of(context).push(
+                // to call product detailpage from this page and forward item
+                MaterialPageRoute(builder: (context) {
               return ProductDetailPage(item: item);
             })),
         child: GridTile(
@@ -44,10 +46,18 @@ class ProductItem extends StatelessWidget {
                               onPressed: () {
                                 StoreProvider.of<AppState>(context)
                                     .dispatch(toggleCartProductAction(item));
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Text('Cart updated'),
+                                  ),
+                                );
                               })
                           : Text('');
                     })),
+            // for fine transition from big to large
             child: Hero(
+                // should have the same tag
                 tag: item,
                 child: Image.network(pictureUrl, fit: BoxFit.cover))));
   }

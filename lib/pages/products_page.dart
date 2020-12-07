@@ -7,21 +7,19 @@ import 'package:badges/badges.dart';
 
 final gradientBackground = BoxDecoration(
     gradient: LinearGradient(
-        begin: Alignment.bottomLeft,
-        end: Alignment.topRight,
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
         stops: [
       0.1,
-      0.3,
-      0.5,
-      0.7,
+      0.4,
+      0.6,
       0.9
     ],
         colors: [
-      Colors.deepOrange[300],
-      Colors.deepOrange[400],
-      Colors.deepOrange[500],
-      Colors.deepOrange[600],
-      Colors.deepOrange[700]
+      Colors.indigo[50],
+      Colors.indigo[100],
+      Colors.indigo[200],
+      Colors.blue[50]
     ]));
 
 class ProductsPage extends StatefulWidget {
@@ -39,6 +37,7 @@ class ProductsPageState extends State<ProductsPage> {
   }
 
   final _appBar = PreferredSize(
+      // to increase appbar size
       preferredSize: Size.fromHeight(60.0),
       child: StoreConnector<AppState, AppState>(
           converter: (store) => store.state,
@@ -64,6 +63,7 @@ class ProductsPageState extends State<ProductsPage> {
                 actions: [
                   Padding(
                       padding: EdgeInsets.only(right: 12.0),
+                      // to get out instaed of appstate add voidcallbak no data will be returned
                       child: StoreConnector<AppState, VoidCallback>(
                           converter: (store) {
                         return () => store.dispatch(logoutUserAction);
@@ -83,25 +83,35 @@ class ProductsPageState extends State<ProductsPage> {
     return Scaffold(
         appBar: _appBar,
         body: Container(
+            // for orange background
             decoration: gradientBackground,
             child: StoreConnector<AppState, AppState>(
                 converter: (store) => store.state,
+
+                /// not  context as it is not needed
                 builder: (_, state) {
                   return Column(children: [
                     Expanded(
+                        // to avoid mobile notches
                         child: SafeArea(
+                            // keep safe in top and bottom
                             top: false,
                             bottom: false,
                             child: GridView.builder(
+                                // to define no of scroll = product length
+                                // default direction is vertical and two columns
+
                                 itemCount: state.products.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount:
+                                        crossAxisCount: //
                                             orientation == Orientation.portrait
                                                 ? 2
                                                 : 3,
+                                        // distance between col, rows
                                         crossAxisSpacing: 4.0,
                                         mainAxisSpacing: 4.0,
+                                        // totake full wide incase of orientation
                                         childAspectRatio:
                                             orientation == Orientation.portrait
                                                 ? 1.0
