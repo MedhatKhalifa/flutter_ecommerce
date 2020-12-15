@@ -11,6 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 ThunkAction<AppState> getUserAction = (Store<AppState> store) async {
   final prefs = await SharedPreferences.getInstance();
   final String storedUser = prefs.getString('user');
+  print("######______Action________#######");
+  print(storedUser);
   final user =
       storedUser != null ? User.fromJson(json.decode(storedUser)) : null;
   store.dispatch(GetUserAction(user));
@@ -76,7 +78,8 @@ ThunkAction<AppState> toggleCartProductAction(Product cartProduct) {
     }
     final List<String> cartProductsIds =
         updatedCartProducts.map((product) => product.id.toString()).toList();
-    await http.put('http://localhost:1337/carts/${user.cartId}',
+    await http.put(
+        'https://atawfiq1.pythonanywhere.com/api/cart_detail/${user.cartId}',
         body: {"products": json.encode(cartProductsIds)},
         headers: {"Authorization": "Bearer ${user.jwt}"});
     store.dispatch(ToggleCartProductAction(updatedCartProducts));
@@ -90,8 +93,10 @@ ThunkAction<AppState> getCartProductsAction = (Store<AppState> store) async {
     return;
   }
   final User user = User.fromJson(json.decode(storedUser));
+  print("================StoredR==================");
+  print(storedUser);
   http.Response response = await http.get(
-      'http://localhost:1337/carts/${user.cartId}',
+      'https://atawfiq1.pythonanywhere.com/api/cart_detail/${user.cartId}',
       headers: {'Authorization': 'Bearer ${user.jwt}'});
   final responseData = json.decode(response.body)['products'];
   List<Product> cartProducts = [];

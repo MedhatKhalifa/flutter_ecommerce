@@ -50,7 +50,7 @@ class LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.only(top: 20.0),
         child: TextFormField(
             onSaved: (val) => _password = val,
-            validator: (val) => val.length < 6 ? 'Password too short' : null,
+            validator: (val) => val.length < 6 ? 'Username too short' : null,
             obscureText: _obscureText,
             decoration: InputDecoration(
                 suffixIcon: GestureDetector(
@@ -103,15 +103,10 @@ class LoginPageState extends State<LoginPage> {
 
   void _registerUser() async {
     setState(() => _isSubmitting = true);
-
     http.Response response = await http.post(
         'https://atawfiq1.pythonanywhere.com/api/login/',
         body: {'username': _username, 'password': _password});
-
     final responseData = json.decode(response.body);
-    print('------------------------------------');
-    print(responseData);
-    print('------------------------------------');
     if (response.statusCode == 200) {
       setState(() => _isSubmitting = false);
       _storeUserData(responseData);
@@ -128,8 +123,17 @@ class LoginPageState extends State<LoginPage> {
   void _storeUserData(responseData) async {
     final prefs = await SharedPreferences.getInstance();
     //Map<String, dynamic> user = responseData['user'];
-    Map<String, dynamic> user = {"username": _username};
-    user.putIfAbsent('jwt', () => responseData['token']);
+    // Map<String, dynamic> user = {"username": _username};
+    // user.putIfAbsent('jwt', () => responseData['token']);
+    // prefs.setString('user', json.encode(responseData));
+
+    Map<String, dynamic> user = responseData;
+    user['jwt'] = responseData['token']; //cart_id
+    user['cartId'] = responseData['cart_id']; //cart_id
+    user.remove('token');
+    user.remove('cart_id');
+    print("&&&&&&&&&&&&&&&&&&&&&&&&&&");
+    print(json.encode(user));
     prefs.setString('user', json.encode(user));
   }
 

@@ -51,9 +51,11 @@ class CartPageState extends State<CartPage> {
         child: Scaffold(
             appBar: AppBar(
                 title: Text('Cart Page'),
+                // Tabbar to add your tabs
                 bottom: TabBar(
                   labelColor: Colors.deepOrange[600],
                   unselectedLabelColor: Colors.deepOrange[900],
+                  // to make clickable tab
                   tabs: [
                     Tab(icon: Icon(Icons.shopping_cart)),
                     Tab(icon: Icon(Icons.credit_card)),
@@ -61,6 +63,7 @@ class CartPageState extends State<CartPage> {
                   ],
                 )),
             body:
+                // to make tab view in ordering
                 TabBarView(children: [_cartTab(), _cardsTab(), _ordersTab()])));
   }
 }

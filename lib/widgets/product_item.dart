@@ -9,8 +9,11 @@ class ProductItem extends StatelessWidget {
   final Product item;
   ProductItem({this.item});
 
-  bool _isInCart(AppState state, String id) {
+  bool _isInCart(AppState state, dynamic id) {
     final List<Product> cartProducts = state.cartProducts;
+    print("0000000000000000000000000000000000000000");
+    print(cartProducts);
+    print(cartProducts.indexWhere((cartProduct) => cartProduct.id == id) > -1);
     return cartProducts.indexWhere((cartProduct) => cartProduct.id == id) > -1;
   }
 
@@ -40,7 +43,7 @@ class ProductItem extends StatelessWidget {
                       return state.user != null
                           ? IconButton(
                               icon: Icon(Icons.shopping_cart),
-                              color: _isInCart(state, item.id.toString())
+                              color: _isInCart(state, item.id)
                                   ? Colors.cyan[700]
                                   : Colors.white,
                               onPressed: () {

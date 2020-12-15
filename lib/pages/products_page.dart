@@ -48,11 +48,12 @@ class ProductsPageState extends State<ProductsPage> {
                     child: state.user != null
                         ? Text(state.user.username)
                         : FlatButton(
-                            child: Text('Register Here',
+                            child: Text('Register or login from Here',
                                 style: Theme.of(context).textTheme.body1),
                             onPressed: () =>
                                 Navigator.pushNamed(context, '/register'))),
                 leading: state.user != null
+                    //Badge icon to use counter above it and you must install its package first
                     ? BadgeIconButton(
                         itemCount: state.cartProducts.length,
                         badgeColor: Colors.lime,
@@ -88,7 +89,7 @@ class ProductsPageState extends State<ProductsPage> {
             child: StoreConnector<AppState, AppState>(
                 converter: (store) => store.state,
 
-                /// not  context as it is not needed
+                /// no  context as it is not needed
                 builder: (_, state) {
                   return Column(children: [
                     Expanded(

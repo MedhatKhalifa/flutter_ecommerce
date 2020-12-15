@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 class AppState {
   final User user;
   final List<Product> products;
+  // cart will be copy of products wo it is not needed to make new model for it
   final List<Product> cartProducts;
 
   AppState(

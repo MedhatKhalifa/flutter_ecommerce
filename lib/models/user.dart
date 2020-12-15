@@ -1,11 +1,11 @@
 import 'package:meta/meta.dart';
 
 class User {
-  String id;
-  String username;
-  String email;
-  String jwt;
-  String cartId;
+  dynamic id;
+  dynamic username;
+  dynamic email;
+  dynamic jwt;
+  dynamic cartId;
 
   User(
       {@required this.id,
